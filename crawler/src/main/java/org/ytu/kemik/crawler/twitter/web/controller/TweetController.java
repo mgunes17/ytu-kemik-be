@@ -4,16 +4,20 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.ytu.kemik.crawler.exception.Twitter4jException;
-import org.ytu.kemik.crawler.twitter.dao.entity.IntactTweetEntity;
+import org.ytu.kemik.crawler.twitter.constant.TwitterConstant;
+import org.ytu.kemik.crawler.twitter.dao.entity.MainTweetEntity;
 import org.ytu.kemik.crawler.twitter.service.dto.PlainTweetDTO;
 import org.ytu.kemik.crawler.twitter.service.impl.TweetService;
 import org.ytu.kemik.crawler.twitter.web.response.TweetCollectingResponse;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @RestController
 @RequestMapping("/tweets")
@@ -22,20 +26,34 @@ public class TweetController {
 	@Autowired
 	private TweetService tweetService;
 
+	@ApiModelProperty("max 100")
 	@PostMapping("/hashtags/{hashtag}")
-	public TweetCollectingResponse getTweetsByHashTag(@PathVariable String hashtag, @RequestParam("count") int count)
-			throws Twitter4jException {
+	public TweetCollectingResponse getTweetsByHashTag(@PathVariable String hashtag,
+			@RequestParam(name = "count", required = false) Integer count) throws Twitter4jException {
+
+		if (count == null || count < 1)
+			count = TwitterConstant.DEFAULT_COUNT_FOR_HASHTAG;
 
 		return tweetService.collectByHashtag(hashtag, count);
 	}
 
-	@GetMapping("/intact-tweets")
-	public List<IntactTweetEntity> getIntactTweets() {
-		return tweetService.getAllIntactTweets();
+	@GetMapping("/main-tweets")
+	public List<MainTweetEntity> getMainTweets() {
+		return tweetService.getAllMainTweets();
 	}
 
 	@GetMapping("/plain-tweets")
 	public List<PlainTweetDTO> getPlainTweets() {
 		return tweetService.getPlaintTweets();
+	}
+
+	@ApiModelProperty("max 100")
+	@PatchMapping("/labels")
+	public List<PlainTweetDTO> getTweetsForLabel(@RequestParam(required = true) String projectName,
+			@RequestParam(required = true) Integer tweetCount) {
+		if (tweetCount < 0 || tweetCount > TwitterConstant.MAX_COUNT_FOR_LABEL)
+			tweetCount = TwitterConstant.DEFAULT_COUNT_FOR_LABEL;
+
+		return tweetService.getTweetsForLabel(projectName, tweetCount);
 	}
 }

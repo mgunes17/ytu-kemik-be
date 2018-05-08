@@ -1,45 +1,43 @@
 package org.ytu.kemik.crawler.twitter.mapper;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import org.ytu.kemik.crawler.twitter.dao.entity.IntactTweetEntity;
+import org.ytu.kemik.crawler.twitter.dao.entity.MainTweetEntity;
 import org.ytu.kemik.crawler.twitter.service.dto.PlainTweetDTO;
 
 import twitter4j.Status;
 
 public class TweetMapper {
 
-	public static List<IntactTweetEntity> toIntactTweetEntityList(List<Status> statusList) {
-		List<IntactTweetEntity> intactTweetList = new ArrayList<IntactTweetEntity>();
-		IntactTweetEntity intactTweet;
+	public static List<MainTweetEntity> toMainTweetEntityList(List<Status> statusList) {
+		List<MainTweetEntity> intactTweetList = new ArrayList<MainTweetEntity>();
+		MainTweetEntity mainTweet;
 
-		LocalDateTime crawledDate = LocalDateTime.now();
+		Date crawledDate = new Date();
 
 		for (Status status : statusList) {
-			intactTweet = new IntactTweetEntity();
-			intactTweet.setId(status.getId());
-			intactTweet.setScreenName(status.getUser().getScreenName());
-			intactTweet.setFavoriteCount(status.getFavoriteCount());
-			intactTweet
-					.setCreatedDate(LocalDateTime.ofInstant(status.getCreatedAt().toInstant(), ZoneId.systemDefault()));
-			intactTweet.setTweet(status.getText());
-			intactTweet.setUserName(status.getUser().getName());
-			intactTweet.setRetweetCount(status.getRetweetCount());
-			intactTweet.setCrawledDate(crawledDate);
+			mainTweet = new MainTweetEntity();
+			mainTweet.setId(status.getId());
+			mainTweet.setScreenName(status.getUser().getScreenName());
+			mainTweet.setFavoriteCount(status.getFavoriteCount());
+			mainTweet.setTweetedDate(status.getCreatedAt());
+			mainTweet.setTweet(status.getText());
+			mainTweet.setUserName(status.getUser().getName());
+			mainTweet.setRetweetCount(status.getRetweetCount());
+			mainTweet.setCreatedDate(crawledDate);
 
-			intactTweetList.add(intactTweet);
+			intactTweetList.add(mainTweet);
 		}
 		return intactTweetList;
 	}
 
-	public static List<PlainTweetDTO> toPlaintTweetDTOList(List<IntactTweetEntity> intactTweetList) {
+	public static List<PlainTweetDTO> toPlaintTweetDTOList(List<MainTweetEntity> mainTweetList) {
 		List<PlainTweetDTO> plainTweetList = new ArrayList<>();
 
-		intactTweetList.forEach(intact -> plainTweetList
-				.add(new PlainTweetDTO(intact.getId(), intact.getScreenName(), intact.getTweet())));
+		mainTweetList.forEach(
+				main -> plainTweetList.add(new PlainTweetDTO(main.getId(), main.getScreenName(), main.getTweet())));
 
 		return plainTweetList;
 	}

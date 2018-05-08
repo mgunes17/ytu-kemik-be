@@ -1,56 +1,65 @@
 package org.ytu.kemik.crawler.twitter.dao.entity;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
-import org.springframework.data.cassandra.mapping.Column;
-import org.springframework.data.cassandra.mapping.PrimaryKey;
-import org.springframework.data.cassandra.mapping.Table;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
-@Table("intact_tweet")
-public class IntactTweetEntity {
+@Entity
+@Table(name = "main_tweet", schema = "crawler")
+@SequenceGenerator(name="common_sequence",sequenceName="common_sequence", allocationSize=1)
+public class MainTweetEntity {
 
-	@PrimaryKey
-	@Column("id")
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
-	@Column("tweet")
+	@Column(name = "tweet", nullable = false)
 	private String tweet;
 
-	@Column("screen_name")
+	@Column(name = "screen_name", nullable = false)
 	private String screenName;
 
-	@Column("username")
+	@Column(name = "username", nullable = false)
 	private String userName;
 
-	@Column("favorite_count")
+	@Column(name = "favorite_count")
 	private int favoriteCount;
 
-	@Column("retweet_count")
+	@Column(name = "retweet_count")
 	private int retweetCount;
 
-	@Column("created_date")
-	private LocalDateTime createdDate;
+	@Column(name = "tweeted_date")
+	private Date tweetedDate;
 
-	@Column("is_favorited")
+	@Column(name = "is_favorited")
 	private boolean isFavorited;
 
-	@Column("is_retweeted")
+	@Column(name = "is_retweeted")
 	private boolean isRetweeted;
 
-	@Column("is_retweet")
+	@Column(name = "is_retweet")
 	private boolean isRetweet;
 
-	@Column("lang")
+	@Column(name = "lang")
 	private String lang;
 
-	@Column("crawled_date")
-	private LocalDateTime crawledDate;
+	@Column(name = "created_date", nullable = false)
+	private Date createdDate;
 
-	@Column("labeled_project_name")
-	private Set<String> projectNameSet;
+	@OneToMany(cascade = CascadeType.REMOVE)
+	private Set<LabeledMainTweetEntity> labeledMainEntitySet;
 
-	public IntactTweetEntity() {
+	public MainTweetEntity() {
 		super();
 	}
 
@@ -102,11 +111,11 @@ public class IntactTweetEntity {
 		this.retweetCount = retweetCount;
 	}
 
-	public LocalDateTime getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(LocalDateTime createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -142,19 +151,12 @@ public class IntactTweetEntity {
 		this.lang = lang;
 	}
 
-	public LocalDateTime getCrawledDate() {
-		return crawledDate;
+	public Date getTweetedDate() {
+		return tweetedDate;
 	}
 
-	public void setCrawledDate(LocalDateTime crawledDate) {
-		this.crawledDate = crawledDate;
+	public void setTweetedDate(Date tweetedDate) {
+		this.tweetedDate = tweetedDate;
 	}
 
-	public Set<String> getProjectNameSet() {
-		return projectNameSet;
-	}
-
-	public void setProjectNameSet(Set<String> projectNameSet) {
-		this.projectNameSet = projectNameSet;
-	}
 }

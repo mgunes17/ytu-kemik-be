@@ -26,8 +26,14 @@ CREATE TABLE intact_tweet (
 	is_retweeted boolean,
 	is_retweet boolean,
 	lang text,
-	crawled_date timestamp,
-	label_project_name set<text>
+	crawled_date timestamp
+);
+
+CREATE TABLE labeled_intact_tweet (
+	project_name text,
+    intact_tweet_id bigint,
+	created_date timestamp,
+	primary_key(project_name, intact_tweet_id)
 );
 
 CREATE TABLE labeled_simple_data (

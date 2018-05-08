@@ -3,3 +3,9 @@ application.yml
 .project
 .settings/
 target/
+/.metadata/
+
+/.metadata/
+
+Servers
+.recommenders

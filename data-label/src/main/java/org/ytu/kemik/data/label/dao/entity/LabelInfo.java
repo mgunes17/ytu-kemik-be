@@ -69,12 +69,3 @@ public class LabelInfo {
 		this.labeledDate = labeledDate;
 	}
 }
-
-// CREATE TABLE label_info (
-// data_uuid uuid,
-// username text,
-// project_name text,
-// label text,
-// labeled_date timestamp,
-// PRIMARY KEY (project_name, username, data_uuid)
-// );
