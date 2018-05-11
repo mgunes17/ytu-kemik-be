@@ -1,40 +1,50 @@
 package org.ytu.kemik.data.label.dao.entity;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
-import org.springframework.cassandra.core.PrimaryKeyType;
-import org.springframework.data.cassandra.mapping.Column;
-import org.springframework.data.cassandra.mapping.PrimaryKeyColumn;
-import org.springframework.data.cassandra.mapping.Table;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
-@Table("label_info")
+@Entity
+@Table(name = "label_info", schema = "crawler", uniqueConstraints = {
+		@UniqueConstraint(columnNames = { "project_name", "username", "labeled_simple_data_id" }) })
+@SequenceGenerator(name = "common_sequence", sequenceName = "common_sequence", allocationSize = 1)
 public class LabelInfo {
 
-	@PrimaryKeyColumn(name = "data_uuid", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
-	private String dataUuid;
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private String id;
 
-	@PrimaryKeyColumn(name = "username", ordinal = 1, type = PrimaryKeyType.CLUSTERED)
+	@Column(name = "username")
 	private String username;
 
-	@PrimaryKeyColumn(name = "project_name", ordinal = 2, type = PrimaryKeyType.CLUSTERED)
+	@Column(name = "project_name")
 	private String projectName;
 
-	@Column("label")
+	@ManyToOne
+	@JoinColumn(name = "labeled_simple_data_id")
+	private LabeledSimpleData labeledSimpleDataId;
+
+	@Column(name = "label")
 	private String label;
 
-	@Column("labeled_date")
-	private LocalDateTime labeledDate;
+	@Column(name = "labeled_date")
+	private Date labeledDate;
+
+	@Column(name = "data_created_date")
+	private Date dataCreatedDate;
 
 	public LabelInfo() {
 		super();
-	}
-
-	public String getDataUuid() {
-		return dataUuid;
-	}
-
-	public void setDataUuid(String dataUuid) {
-		this.dataUuid = dataUuid;
 	}
 
 	public String getLabel() {
@@ -61,11 +71,36 @@ public class LabelInfo {
 		this.projectName = projectName;
 	}
 
-	public LocalDateTime getLabeledDate() {
+	public Date getLabeledDate() {
 		return labeledDate;
 	}
 
-	public void setLabeledDate(LocalDateTime labeledDate) {
+	public void setLabeledDate(Date labeledDate) {
 		this.labeledDate = labeledDate;
 	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public Date getDataCreatedDate() {
+		return dataCreatedDate;
+	}
+
+	public void setDataCreatedDate(Date dataCreatedDate) {
+		this.dataCreatedDate = dataCreatedDate;
+	}
+
+	public LabeledSimpleData getLabeledSimpleDataId() {
+		return labeledSimpleDataId;
+	}
+
+	public void setLabeledSimpleDataId(LabeledSimpleData labeledSimpleDataId) {
+		this.labeledSimpleDataId = labeledSimpleDataId;
+	}
+
 }

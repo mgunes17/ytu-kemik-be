@@ -5,9 +5,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.ytu.kemik.crawler.exception.ExceptionInfo;
 import org.ytu.kemik.crawler.exception.Twitter4jException;
 import org.ytu.kemik.crawler.twitter.dao.entity.LabeledMainTweetEntity;
@@ -45,7 +46,7 @@ public class TweetServiceImpl implements TweetService {
 
 			List<MainTweetEntity> mainTweetEntityList = TweetMapper.toMainTweetEntityList(statusList);
 
-			mainTweetRepository.save(mainTweetEntityList);
+			mainTweetRepository.saveAll(mainTweetEntityList);
 
 			return new TweetCollectingResponse(mainTweetEntityList.size());
 		} catch (Exception ex) {
@@ -78,7 +79,7 @@ public class TweetServiceImpl implements TweetService {
 
 	@Override
 	public List<PlainTweetDTO> getTweetsForLabel(String projectName, Integer tweetCount) {
-		List<MainTweetEntity> mainTweetList = mainTweetRepository.getForLabels(projectName);
+		List<MainTweetEntity> mainTweetList = mainTweetRepository.getForLabels(projectName, tweetCount);
 
 		List<LabeledMainTweetEntity> labeledMainTweetEntityList = new ArrayList<>();
 		Date createdDate = new Date();
@@ -91,7 +92,7 @@ public class TweetServiceImpl implements TweetService {
 			labeledMainTweetEntityList.add(lmt);
 		}
 
-		labeledMainTweetRepository.save(labeledMainTweetEntityList);
+		labeledMainTweetRepository.saveAll(labeledMainTweetEntityList);
 
 		return TweetMapper.toPlaintTweetDTOList(mainTweetList);
 	}

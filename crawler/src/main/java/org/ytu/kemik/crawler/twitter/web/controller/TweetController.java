@@ -3,6 +3,8 @@ package org.ytu.kemik.crawler.twitter.web.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,11 +51,11 @@ public class TweetController {
 
 	@ApiModelProperty("max 100")
 	@PatchMapping("/labels")
-	public List<PlainTweetDTO> getTweetsForLabel(@RequestParam(required = true) String projectName,
+	public ResponseEntity<List<PlainTweetDTO>> getTweetsForLabel(@RequestParam(required = true) String projectName,
 			@RequestParam(required = true) Integer tweetCount) {
 		if (tweetCount < 0 || tweetCount > TwitterConstant.MAX_COUNT_FOR_LABEL)
 			tweetCount = TwitterConstant.DEFAULT_COUNT_FOR_LABEL;
 
-		return tweetService.getTweetsForLabel(projectName, tweetCount);
+		return new ResponseEntity<>(tweetService.getTweetsForLabel(projectName, tweetCount), HttpStatus.OK);
 	}
 }

@@ -10,9 +10,9 @@ import org.ytu.kemik.crawler.twitter.dao.entity.MainTweetEntity;
 public interface MainTweetRepository extends CrudRepository<MainTweetEntity, Long> {
 
 	// TODO LIMIT
-	@Query("SELECT t FROM MainTweetEntity t WHERE NOT EXISTS ("
-			+ "SELECT labeled.mainTweet FROM "
-			+ "LabeledMainTweetEntity labeled WHERE t.id = labeled.mainTweet.id AND labeled.projectName = :projectName) ")
-	List<MainTweetEntity> getForLabels(@Param("projectName") String projectName);
+	@Query(value = "SELECT * FROM crawler.main_tweet m WHERE NOT EXISTS (" + "SELECT main_tweet_id FROM "
+			+ "crawler.labeled_main_tweet labeled WHERE m.id = labeled.main_tweet_id AND "
+			+ "labeled.project_name = :projectName) LIMIT :count", nativeQuery = true)
+	List<MainTweetEntity> getForLabels(@Param("projectName")String projectName, @Param("count") Integer count);
 
 }

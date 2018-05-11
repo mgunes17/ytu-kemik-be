@@ -74,3 +74,5 @@ CREATE SEQUENCE crawler.common_sequnce START 101;
 CREATE SEQUENCE hibernate_sequence START 1;
 
 CREATE SEQUENCE crawler.hibernate_sequence START 1;
+
+CREATE SEQUENCE label.hibernate_sequence START 1;
