@@ -50,7 +50,7 @@ CREATE TABLE label.labeled_simple_data (
 	id BIGINT PRIMARY KEY,
 	id_from_source varchar(50),
 	source_type varchar(50),
-	content varchar(50),
+	content varchar(500),
 	project_name varchar(50),
 	label varchar(50),
 	is_certain boolean,
