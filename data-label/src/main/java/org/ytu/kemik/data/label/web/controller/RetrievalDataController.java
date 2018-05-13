@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.ytu.kemik.data.label.domain.service.RetrievalDataService;
+import org.ytu.kemik.data.label.exception.DataToLabelNotFoundException;
 import org.ytu.kemik.data.label.web.request.TweetCandidateRequest;
 import org.ytu.kemik.data.label.web.request.TweetLabelRequest;
 import org.ytu.kemik.data.label.web.response.TweetCandidateResponse;
@@ -27,7 +28,7 @@ public class RetrievalDataController {
 
 	@PostMapping("/tweets")
 	public ResponseEntity<List<TweetCandidateResponse>> getTweetsForLabel(
-			@RequestBody @Validated TweetCandidateRequest request) {
+			@RequestBody @Validated TweetCandidateRequest request) throws DataToLabelNotFoundException {
 
 		List<TweetCandidateResponse> responseList = retrievalDataService.getTweetsForLabel(request.getProjectName(),
 				request.getTweetCount());

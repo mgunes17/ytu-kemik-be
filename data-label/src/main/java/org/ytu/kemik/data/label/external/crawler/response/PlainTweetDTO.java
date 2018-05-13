@@ -2,15 +2,15 @@ package org.ytu.kemik.data.label.external.crawler.response;
 
 public class PlainTweetDTO {
 
-	private long id;
+	private Long id;
 	private String screenName;
 	private String tweetBody;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

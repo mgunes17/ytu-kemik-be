@@ -18,7 +18,7 @@ public class LabeledSimpleData {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private String id;
+	private Long id;
 
 	@Column(name = "id_from_source")
 	private String idFromSource;
@@ -48,11 +48,11 @@ public class LabeledSimpleData {
 		super();
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -22,7 +22,7 @@ public class LabelInfo {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private String id;
+	private Long id;
 
 	@Column(name = "username")
 	private String username;
@@ -79,11 +79,11 @@ public class LabelInfo {
 		this.labeledDate = labeledDate;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
