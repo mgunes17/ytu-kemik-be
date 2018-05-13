@@ -14,8 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "label_info", schema = "crawler", uniqueConstraints = {
-		@UniqueConstraint(columnNames = { "project_name", "username", "labeled_simple_data_id" }) })
+@Table(name = "label_info", schema = "label", uniqueConstraints = {
+		@UniqueConstraint(columnNames = { "username", "labeled_simple_data_id" }) })
 @SequenceGenerator(name = "common_sequence", sequenceName = "common_sequence", allocationSize = 1)
 public class LabelInfo {
 
@@ -27,20 +27,14 @@ public class LabelInfo {
 	@Column(name = "username")
 	private String username;
 
-	@Column(name = "project_name")
-	private String projectName;
-
 	@ManyToOne
 	@JoinColumn(name = "labeled_simple_data_id")
-	private LabeledSimpleData labeledSimpleDataId;
+	private LabeledSimpleData labeledSimpleData;
 
 	@Column(name = "label")
 	private String label;
 
-	@Column(name = "labeled_date")
-	private Date labeledDate;
-
-	@Column(name = "data_created_date")
+	@Column(name = "created_date")
 	private Date dataCreatedDate;
 
 	public LabelInfo() {
@@ -63,22 +57,6 @@ public class LabelInfo {
 		this.username = username;
 	}
 
-	public String getProjectName() {
-		return projectName;
-	}
-
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
-	}
-
-	public Date getLabeledDate() {
-		return labeledDate;
-	}
-
-	public void setLabeledDate(Date labeledDate) {
-		this.labeledDate = labeledDate;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -95,12 +73,12 @@ public class LabelInfo {
 		this.dataCreatedDate = dataCreatedDate;
 	}
 
-	public LabeledSimpleData getLabeledSimpleDataId() {
-		return labeledSimpleDataId;
+	public LabeledSimpleData getLabeledSimpleData() {
+		return labeledSimpleData;
 	}
 
-	public void setLabeledSimpleDataId(LabeledSimpleData labeledSimpleDataId) {
-		this.labeledSimpleDataId = labeledSimpleDataId;
+	public void setLabeledSimpleData(LabeledSimpleData labeledSimpleData) {
+		this.labeledSimpleData = labeledSimpleData;
 	}
 
 }

@@ -5,32 +5,10 @@ import javax.validation.constraints.NotNull;
 public class LabeledTweetDTO {
 
 	@NotNull
-	private String username;
-
-	@NotNull
-	private String userToken;
-
-	@NotNull
 	private Long simpleDataId;
 
 	@NotNull
 	private LabelType labelType;
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getUserToken() {
-		return userToken;
-	}
-
-	public void setUserToken(String userToken) {
-		this.userToken = userToken;
-	}
 
 	public Long getSimpleDataId() {
 		return simpleDataId;

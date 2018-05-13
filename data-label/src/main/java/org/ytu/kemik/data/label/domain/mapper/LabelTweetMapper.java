@@ -21,8 +21,8 @@ public class LabelTweetMapper {
 
 	public static List<LabeledSimpleData> toLabeledSimpleData(List<PlainTweetDTO> plainTweetList, String sourceType,
 			String projectName) {
-		List<LabeledSimpleData> simpleDataList = new ArrayList<>();
 
+		List<LabeledSimpleData> simpleDataList = new ArrayList<>();
 		Date createdDate = new Date();
 
 		for (PlainTweetDTO plainTweet : plainTweetList) {
