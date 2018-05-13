@@ -1,5 +1,7 @@
 package org.ytu.kemik.data.label.web.request;
 
+import javax.validation.constraints.NotNull;
+
 import org.ytu.kemik.data.label.domain.dto.LabelOption;
 
 import io.swagger.annotations.ApiModel;
@@ -8,9 +10,16 @@ import io.swagger.annotations.ApiModel;
 public class TweetCandidateRequest {
 
 	private String userToken; // TODO userToken == username from manager --> bff
+	
+	@NotNull
 	private String username;
+	
+	@NotNull
 	private String projectName; // TODO kayıtlı mı kontrolü
+	
 	private LabelOption labelOption; // TODO
+	
+	@NotNull
 	private Integer tweetCount;
 
 	public String getUserToken() {

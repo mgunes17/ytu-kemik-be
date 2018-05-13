@@ -62,11 +62,9 @@ CREATE TABLE label.label_info (
 	id BIGINT PRIMARY KEY,
 	labeled_simple_data_id BIGINT references label.labeled_simple_data(id),
 	username varchar(50),
-	project_name varchar(50),
 	label varchar(50),
-	labeled_date timestamp,
-	crated_date timestamp,
-	UNIQUE (project_name, username, labeled_simple_data_id)
+	created_date timestamp,
+	UNIQUE (username, labeled_simple_data_id)
 );
 
 CREATE SEQUENCE crawler.common_sequnce START 101;

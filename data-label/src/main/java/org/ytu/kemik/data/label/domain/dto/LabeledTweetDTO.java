@@ -8,7 +8,7 @@ public class LabeledTweetDTO {
 	private Long simpleDataId;
 
 	@NotNull
-	private LabelType labelType;
+	private SentimentLabelType labelType;
 
 	public Long getSimpleDataId() {
 		return simpleDataId;
@@ -18,11 +18,11 @@ public class LabeledTweetDTO {
 		this.simpleDataId = simpleDataId;
 	}
 
-	public LabelType getLabelType() {
+	public SentimentLabelType getLabelType() {
 		return labelType;
 	}
 
-	public void setLabelType(LabelType labelType) {
+	public void setLabelType(SentimentLabelType labelType) {
 		this.labelType = labelType;
 	}
 

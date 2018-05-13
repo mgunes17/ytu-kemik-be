@@ -7,10 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.ytu.kemik.data.label.domain.service.LabelParameterService;
 import org.ytu.kemik.data.label.domain.service.LabelTweetService;
 import org.ytu.kemik.data.label.domain.service.RetrievalDataService;
 import org.ytu.kemik.data.label.exception.DataToLabelNotFoundException;
@@ -29,6 +32,9 @@ public class RetrievalDataController {
 	@Autowired
 	private LabelTweetService labelTweetService;
 
+	@Autowired
+	private LabelParameterService labelParameterService;
+
 	@PostMapping("/tweets/simple-data")
 	public ResponseEntity<List<TweetCandidateResponse>> getTweetsForLabel(
 			@RequestBody @Validated TweetCandidateRequest request) throws DataToLabelNotFoundException {
@@ -44,5 +50,10 @@ public class RetrievalDataController {
 		labelTweetService.labelTweets(request);
 
 		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+
+	@GetMapping("/data/labels")
+	public ResponseEntity<List<String>> getLabelOptions(@RequestParam("labelCode") String labelCode) {
+		return new ResponseEntity<>(labelParameterService.getLabelList(labelCode), HttpStatus.OK);
 	}
 }
