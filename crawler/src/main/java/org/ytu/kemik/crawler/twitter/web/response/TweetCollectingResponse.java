@@ -2,13 +2,13 @@ package org.ytu.kemik.crawler.twitter.web.response;
 
 public class TweetCollectingResponse {
 
-	private int tweetCount;
+	private Integer tweetCount;
 
-	public TweetCollectingResponse(int tweetCount) {
+	public TweetCollectingResponse(Integer tweetCount) {
 		this.tweetCount = tweetCount;
 	}
 
-	public int getTweetCount() {
+	public Integer getTweetCount() {
 		return tweetCount;
 	}
 }

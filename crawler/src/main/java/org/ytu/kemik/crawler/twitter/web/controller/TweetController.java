@@ -29,13 +29,13 @@ public class TweetController {
 
 	@ApiModelProperty("max 100")
 	@PostMapping("/hashtags/{hashtag}")
-	public TweetCollectingResponse getTweetsByHashTag(@PathVariable String hashtag,
+	public ResponseEntity<TweetCollectingResponse> getTweetsByHashTag(@PathVariable String hashtag,
 			@RequestParam(name = "count", required = false) Integer count) throws Twitter4jException {
 
 		if (count == null || count < 1)
 			count = TwitterConstant.DEFAULT_COUNT_FOR_HASHTAG;
 
-		return tweetService.collectByHashtag(hashtag, count);
+		return new ResponseEntity<>(tweetService.collectByHashtag(hashtag, count), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/main-tweets")

@@ -9,3 +9,8 @@ target/
 
 Servers
 .recommenders
+.mvn/
+target//
+.springBeans
+mvnw
+mvnw.cmd
