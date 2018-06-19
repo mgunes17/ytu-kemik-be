@@ -15,7 +15,8 @@ import org.ytu.kemik.crawler.exception.Twitter4jException;
 import org.ytu.kemik.crawler.twitter.constant.TwitterConstant;
 import org.ytu.kemik.crawler.twitter.dao.entity.MainTweetEntity;
 import org.ytu.kemik.crawler.twitter.service.dto.PlainTweetDTO;
-import org.ytu.kemik.crawler.twitter.service.impl.TweetService;
+import org.ytu.kemik.crawler.twitter.service.tweet.TweetCollectionService;
+import org.ytu.kemik.crawler.twitter.service.tweet.TweetQueryService;
 import org.ytu.kemik.crawler.twitter.web.response.TweetCollectingResponse;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -25,7 +26,10 @@ import io.swagger.annotations.ApiModelProperty;
 public class TweetController {
 
 	@Autowired
-	private TweetService tweetService;
+	private TweetCollectionService tweetCollectionService;
+
+	@Autowired
+	private TweetQueryService tweetQueryService;
 
 	@ApiModelProperty("max 100")
 	@PostMapping("/hashtags/{hashtag}")
@@ -35,17 +39,28 @@ public class TweetController {
 		if (count == null || count < 1)
 			count = TwitterConstant.DEFAULT_COUNT_FOR_HASHTAG;
 
-		return new ResponseEntity<>(tweetService.collectByHashtag(hashtag, count), HttpStatus.CREATED);
+		return new ResponseEntity<>(tweetCollectionService.collectByHashtag(hashtag, count), HttpStatus.CREATED);
+	}
+
+	@ApiModelProperty("")
+	@PostMapping("/users/{username}")
+	public ResponseEntity<TweetCollectingResponse> getTweetsByUsername(@PathVariable String username,
+			@RequestParam(name = "count", required = false) Integer count) throws Twitter4jException {
+
+		if (count == null || count < 1)
+			count = TwitterConstant.DEFAULT_COUNT_FOR_HASHTAG;
+
+		return new ResponseEntity<>(tweetCollectionService.collectByUsername(username, count), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/main-tweets")
 	public List<MainTweetEntity> getMainTweets() {
-		return tweetService.getAllMainTweets();
+		return tweetQueryService.getAllMainTweets();
 	}
 
 	@GetMapping("/plain-tweets")
 	public List<PlainTweetDTO> getPlainTweets() {
-		return tweetService.getPlaintTweets();
+		return tweetQueryService.getPlaintTweets();
 	}
 
 	@ApiModelProperty("max 100")
@@ -55,6 +70,6 @@ public class TweetController {
 		if (tweetCount < 0 || tweetCount > TwitterConstant.MAX_COUNT_FOR_LABEL)
 			tweetCount = TwitterConstant.DEFAULT_COUNT_FOR_LABEL;
 
-		return new ResponseEntity<>(tweetService.getTweetsForLabel(projectName, tweetCount), HttpStatus.OK);
+		return new ResponseEntity<>(tweetQueryService.getTweetsForLabel(projectName, tweetCount), HttpStatus.OK);
 	}
 }

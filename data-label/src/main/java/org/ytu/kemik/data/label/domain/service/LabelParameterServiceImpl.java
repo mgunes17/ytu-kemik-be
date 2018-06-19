@@ -10,20 +10,20 @@ import org.ytu.kemik.data.label.domain.dto.SentimentLabelType;
 public class LabelParameterServiceImpl implements LabelParameterService {
 
 	@Override
-	public List<String> getLabelList(String labelCode) { //TODO dynamic by project
-		if(labelCode.equals("havadis")) {
+	public List<String> getLabelList(String labelCode) { // TODO dynamic by project
+		if (labelCode.equals("havadis")) {
 			List<String> labelTypeList = new ArrayList<>();
-			
+
 			labelTypeList.add(SentimentLabelType.POSITIVE.toString());
 			labelTypeList.add(SentimentLabelType.NEGATIVE.toString());
 			labelTypeList.add(SentimentLabelType.NOTR.toString());
-			labelTypeList.add(SentimentLabelType.SPAM.toString());
-			
+			labelTypeList.add(SentimentLabelType.FREE.toString());
+
 			return labelTypeList;
 		} else {
 			throw new IllegalArgumentException();
 		}
-		
+
 	}
 
 }
