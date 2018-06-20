@@ -33,8 +33,8 @@ public class Twitter4JConfiguration {
 			cfb.setDebugEnabled(true).setOAuthConsumerKey("3d0rr1LRdAFnP3UhDr2B6ot99")
 					.setOAuthConsumerSecret("FqFFaqXS0qnuJnvxKq4qE4BN5tkdqyrqqwcAJ2wtpKMl4gpdef")
 					.setOAuthAccessToken("2587971211-jZTTWV4vAinpcAc51eC4nlZFRR4Tw4rudT4BUpm")
-					.setOAuthAccessTokenSecret("QuGRTAHW5mE0xaNXIZ6nU6bPXfOeSb0ALe40uasiXMuo8");
-
+					.setOAuthAccessTokenSecret("QuGRTAHW5mE0xaNXIZ6nU6bPXfOeSb0ALe40uasiXMuo8")
+					.setTweetModeExtended(true);
 			TwitterFactory tf = new TwitterFactory(cfb.build());
 
 			return tf.getInstance();
