@@ -14,7 +14,7 @@ public class TwitterCrawlerService {
 	private CrawlerExternalService crawlerExternalService;
 
 	public void triggerForTwitter() {
-		String[] hashtagArr = { "kalem", "defter", "okul" };
+		String[] hashtagArr = { "türkiye", "turkiye", "turkıye", "türkiye", "hükümet", "hükumet", "hukumet", "emniyet", "TC", "iktidar", "polis", "asker", "parti", "adalet", "devlet", "terör", "teror", "pkk" };
 
 		while (true) {
 			for (String hashtag : hashtagArr) {
