@@ -30,7 +30,7 @@ CREATE TABLE manager.user_info (
 
 CREATE TABLE crawler.main_tweet (
 	id BIGINT PRIMARY KEY,
-	tweet VARCHAR(300) NOT NULL,
+	tweet VARCHAR(600) NOT NULL,
 	screen_name VARCHAR(100) NOT NULL,
 	username VARCHAR(100) NOT NULL,
 	favorite_count NUMERIC,
