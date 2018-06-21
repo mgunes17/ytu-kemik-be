@@ -1,16 +1,17 @@
 package org.ytu.kemik.crawler.twitter.service.tweet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.ytu.kemik.crawler.common.filter.LanguageFilter;
 import org.ytu.kemik.crawler.exception.ExceptionInfo;
 import org.ytu.kemik.crawler.exception.Twitter4jException;
 import org.ytu.kemik.crawler.twitter.dao.entity.MainTweetEntity;
 import org.ytu.kemik.crawler.twitter.dao.repository.MainTweetRepository;
+import org.ytu.kemik.crawler.twitter.filter.ITweetFilter;
 import org.ytu.kemik.crawler.twitter.mapper.TweetMapper;
 import org.ytu.kemik.crawler.twitter.web.response.TweetCollectingResponse;
 
@@ -29,6 +30,9 @@ public class TweetCollectionServiceImpl implements TweetCollectionService {
 
 	@Autowired
 	private MainTweetRepository mainTweetRepository;
+	
+	@Autowired(required=false)
+	private ArrayList<ITweetFilter> tweetFilters;
 
 	public TweetCollectingResponse collectByHashtag(String hashtag, Integer count) throws Twitter4jException {
 		try {
@@ -39,9 +43,9 @@ public class TweetCollectionServiceImpl implements TweetCollectionService {
 
 			List<MainTweetEntity> mainTweetEntityList = TweetMapper.toMainTweetEntityList(statusList);
 			
-			LanguageFilter isLangTR = new LanguageFilter("tr");
-			mainTweetEntityList.removeIf(tweet -> !isLangTR.test(tweet.getTweet()));
-			
+			if(tweetFilters != null)
+				tweetFilters.forEach(filter -> mainTweetEntityList.removeIf(filter));
+						
 			mainTweetRepository.saveAll(mainTweetEntityList);
 
 			return new TweetCollectingResponse(mainTweetEntityList.size());

@@ -1,8 +1,14 @@
 package org.ytu.kemik.crawler.configuration;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.ytu.kemik.crawler.twitter.filter.ITweetFilter;
+import org.ytu.kemik.crawler.twitter.filter.RetweetFilter;
+import org.ytu.kemik.crawler.twitter.filter.TweetLanguageFilter;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
@@ -51,5 +57,13 @@ public class Twitter4JConfiguration {
 			twitter = buildTwitter();
 
 		return twitter;
+	}
+	
+	@Bean
+	public ArrayList<ITweetFilter> getFilters() throws IOException {
+		ArrayList<ITweetFilter> filters = new ArrayList<>();
+		filters.add(new RetweetFilter());
+		filters.add(new TweetLanguageFilter());
+		return filters;
 	}
 }
