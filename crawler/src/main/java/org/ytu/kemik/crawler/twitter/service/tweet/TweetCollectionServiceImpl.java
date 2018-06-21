@@ -62,6 +62,9 @@ public class TweetCollectionServiceImpl implements TweetCollectionService {
 			List<Status> statusList = twitter.getUserTimeline(username, paging);
 			List<MainTweetEntity> mainTweetEntityList = TweetMapper.toMainTweetEntityList(statusList);
 
+			if(tweetFilters != null)
+				tweetFilters.forEach(filter -> mainTweetEntityList.removeIf(filter));
+			
 			mainTweetRepository.saveAll(mainTweetEntityList);
 
 			return new TweetCollectingResponse(mainTweetEntityList.size());
