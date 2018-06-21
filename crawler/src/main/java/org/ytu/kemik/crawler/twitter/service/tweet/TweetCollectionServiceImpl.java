@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.ytu.kemik.crawler.common.filter.LanguageFilter;
 import org.ytu.kemik.crawler.exception.ExceptionInfo;
 import org.ytu.kemik.crawler.exception.Twitter4jException;
 import org.ytu.kemik.crawler.twitter.dao.entity.MainTweetEntity;
@@ -37,7 +38,10 @@ public class TweetCollectionServiceImpl implements TweetCollectionService {
 			List<Status> statusList = result.getTweets();
 
 			List<MainTweetEntity> mainTweetEntityList = TweetMapper.toMainTweetEntityList(statusList);
-
+			
+			LanguageFilter isLangTR = new LanguageFilter("tr");
+			mainTweetEntityList.removeIf(tweet -> !isLangTR.test(tweet.getTweet()));
+			
 			mainTweetRepository.saveAll(mainTweetEntityList);
 
 			return new TweetCollectingResponse(mainTweetEntityList.size());
