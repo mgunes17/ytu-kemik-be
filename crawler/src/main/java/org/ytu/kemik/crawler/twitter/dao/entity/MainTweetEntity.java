@@ -20,7 +20,6 @@ public class MainTweetEntity {
 
 	@Id
 	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
 	@Column(name = "tweet", nullable = false)
