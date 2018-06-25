@@ -15,7 +15,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "main_tweet", schema = "crawler")
-@SequenceGenerator(name="common_sequence",sequenceName="common_sequence", allocationSize=1)
 public class MainTweetEntity {
 
 	@Id
