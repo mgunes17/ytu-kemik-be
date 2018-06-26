@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ytu.kemik.data.label.dao.entity.LabeledSimpleData;
+import org.ytu.kemik.data.label.dao.repository.LabelInfoRepository;
 import org.ytu.kemik.data.label.dao.repository.LabeledSimpleDataRepository;
 import org.ytu.kemik.data.label.domain.mapper.LabelTweetMapper;
 import org.ytu.kemik.data.label.exception.DataToLabelNotFoundException;
@@ -23,6 +24,9 @@ public class RetrievalDataServiceImpl implements RetrievalDataService {
 
 	@Autowired
 	private LabeledSimpleDataRepository labeledSimpleDataRepository;
+	
+	@Autowired
+	private LabelInfoRepository labelInfoRepository;
 
 	@Override
 	public List<TweetCandidateResponse> getTweetsForLabel(String projectName, Integer count)
@@ -49,4 +53,9 @@ public class RetrievalDataServiceImpl implements RetrievalDataService {
 		}
 	}
 
+	@Override
+	public Integer getUserLabelCount(String username) {
+		return labelInfoRepository.getLabeledCountForUsername(username);
+	}
+	
 }

@@ -56,4 +56,9 @@ public class RetrievalDataController {
 	public ResponseEntity<List<String>> getLabelOptions(@RequestParam("labelCode") String labelCode) {
 		return new ResponseEntity<>(labelParameterService.getLabelList(labelCode), HttpStatus.OK);
 	}
+	
+	@GetMapping("/data/userLabelCount")
+	public ResponseEntity<Integer> getUserLabelCount(@RequestParam("username") String username) {
+		return new ResponseEntity<>(retrievalDataService.getUserLabelCount(username), HttpStatus.OK);
+	}
 }

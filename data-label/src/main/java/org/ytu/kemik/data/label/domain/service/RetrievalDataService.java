@@ -9,4 +9,6 @@ public interface RetrievalDataService {
 
 	List<TweetCandidateResponse> getTweetsForLabel(String projectName, Integer count)
 			throws DataToLabelNotFoundException;
+	
+	Integer getUserLabelCount(String username);
 }
