@@ -63,7 +63,9 @@ public class TwitterCrawlerService {
 				"cumhurittifakı",
 				"milletittifakı",
 				"sezaitemelli",
-				"pervinbuldan"};
+				"pervinbuldan",
+				"muhalefet",
+				"iktidar"};
 
 		while (true) {
 			for (String hashtag : hashtagArr) {
