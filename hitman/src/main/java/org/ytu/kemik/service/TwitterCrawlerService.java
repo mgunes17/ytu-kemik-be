@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import org.ytu.kemik.external.crawler.client.CrawlerExternalService;
 import org.ytu.kemik.external.crawler.response.TweetCollectingResponse;
 
-import com.netflix.client.ClientException;
-
 @Service
 public class TwitterCrawlerService {
 
@@ -70,7 +68,7 @@ public class TwitterCrawlerService {
 		while (true) {
 			for (String hashtag : hashtagArr) {
 				try {
-					Thread.sleep(5000);
+					Thread.sleep(60000);
 					TweetCollectingResponse response = crawlerExternalService.getTweetsByHashTag(hashtag, 20);
 					System.out.println("-----------------------------------------");
 					System.out.println(hashtag + " için " + response.getTweetCount() + " adet tweet kaydedildi");
