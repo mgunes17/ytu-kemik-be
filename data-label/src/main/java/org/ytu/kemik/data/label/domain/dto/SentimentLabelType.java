@@ -5,5 +5,6 @@ public enum SentimentLabelType { //TODO db de proje bazlı etiket listesi tanım
 	POSITIVE,
 	NEGATIVE,
 	NOTR,
-	FREE
+	FREE,
+	BOT
 }

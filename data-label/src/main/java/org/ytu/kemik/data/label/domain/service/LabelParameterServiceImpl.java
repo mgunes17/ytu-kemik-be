@@ -18,6 +18,7 @@ public class LabelParameterServiceImpl implements LabelParameterService {
 			labelTypeList.add(SentimentLabelType.NEGATIVE.toString());
 			labelTypeList.add(SentimentLabelType.NOTR.toString());
 			labelTypeList.add(SentimentLabelType.FREE.toString());
+			labelTypeList.add(SentimentLabelType.BOT.toString());
 
 			return labelTypeList;
 		} else {
